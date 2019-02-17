@@ -1,0 +1,47 @@
+#
+# 项目部署版
+# 部署：sudo docker-compose up -d
+
+version: "3.4"
+
+x-logging:
+  &default-logging
+  driver: json-file
+  options:
+    max-size: '12m'
+    max-file: '5'
+
+x-volumes:
+  &project-home-dir
+  .:/proj
+
+
+services:
+  web:
+    restart: always
+    image: simple_calculate:latest
+    ports:
+      - "8001"
+      - "8002"
+    command: python3 server.py 192.168.33.11 8001 && 192.168.33.11 8002
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+    volumes:
+      - .:/proj
+
+  nginx:
+    restart: always
+    image: simple_calculate_nginx:latest
+    ports:
+      - "8001:8001"
+      - "8002:8002"
+    command: nginx -g "daemon off;"
+    volumes:
+      - *project-home-dir
+      - ./common/nginx/conf/simple_calculate_conf:/etc/nginx/sites-enabled/simple_calculate_conf
+    logging: *default-logging
+    depends_on:
+      - web

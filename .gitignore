@@ -82,4 +82,5 @@ ENV/
 db.sql*
 .idea/*
 
+settings_local.py
 docker-compose.yml
