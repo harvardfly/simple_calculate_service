@@ -1,4 +1,8 @@
-# 基于python3和grpc的简单计算服务，使用ZooKeeper作为服务协调，nginx反向代理
+# 基于python3和grpc的简单计算服务，分别应用grpc的四种接口类型
+Unary RPC （一元RPC）：计算服务(加减乘除)
+Server Streaming RPC （ 服务器流式RPC）：通过学科获取对应的题型
+Client Streaming RPC （ 客户端流式RPC）：累加服务
+Bidirectional Streaming RPC （双向流式RPC）：竞猜服务
 ```
 Protocol Buffers：proto3
 zookeeper：3.4.13
