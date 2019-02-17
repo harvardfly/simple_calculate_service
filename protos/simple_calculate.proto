@@ -1,0 +1,63 @@
+syntax = "proto3";
+message Work {
+    int32 num1 = 1;
+    int32 num2 = 2;
+    enum Operation {
+        ADD = 0;
+        SUBTRACT = 1;
+        MULTIPLY = 2;
+        DIVIDE = 3;
+    };
+    Operation op = 3;
+}
+message Result {
+    int32 val = 1;
+}
+
+message Subject {
+    string name = 1;
+}
+
+message QuestionType {
+    string name = 1;
+}
+
+message Delta {
+    int32 val = 1;
+}
+
+message Sum {
+    int32 val = 1;
+}
+
+message Number {
+    int32 val = 1;
+}
+
+message Answer {
+    int32 val = 1;
+    string desc = 2;
+}
+
+service SimpleRpcServer {
+    // unary rpc
+    rpc Calculate (Work) returns (Result) {
+    }
+
+    // server streaming rpc
+    // 客户端发送学科，服务端多次返回该学科包含的题型
+    rpc GetSubjectQuestionTypes (Subject) returns (stream QuestionType) {
+    }
+
+    // client streaming rpc
+    // 客户端多次发送累加值，服务端返回最终的累计和
+    rpc Accumulate (stream Delta) returns (Sum) {
+    }
+
+    // bidirectional streaming rpc
+    // 客户端多次发送猜的数字，对于猜中的数字，服务端返回，否则不返回
+    rpc GuessNumber (stream Number) returns (stream Answer) {
+    }
+}
+// 安装protobuf编译器和grpc库
+// pip install -i http://pypi.douban.com/simple/ grpcio-tools --trusted-host pypi.douban.com
