@@ -14,7 +14,6 @@ Protocol Buffers：proto3
 zookeeper：3.4.13
 grpcio-tools：1.18.0
 kazoo：2.6.0
-ORM：peewee
 反向代理：nginx
 部署：Docker
 ```
